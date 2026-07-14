@@ -10,7 +10,7 @@ namespace EFCorePractice.App
         static void Main(string[] args)
         {
             var context = new EfcorePracticeDbContext();
-
+            //crear nuevos registros
             /*var categorias = new Categoria()
             {
                 NombreCategoria = "Tecnologia"
@@ -42,7 +42,7 @@ namespace EFCorePractice.App
             context.SaveChanges();*/
 
             var nombre = "Tecnologia";
-
+            //leer informacion
             var filtro = context.Categorias.Where(item => item.NombreCategoria == nombre).GroupBy(item => item.NombreCategoria).ToList();
 
             Console.WriteLine(filtro.FirstOrDefault().Key);
@@ -72,6 +72,32 @@ namespace EFCorePractice.App
             
 
             Console.WriteLine("*********");
+
+            //update de la informacion 
+            var updateDataElement = context.Productos.FirstOrDefault(obj => obj.Precio == 2500);
+            if (updateDataElement != null)
+            {
+                updateDataElement.Precio = 2200;
+                context.SaveChanges();
+                Console.WriteLine(updateDataElement.NombreProducto + "-" + updateDataElement.Precio);
+            }
+
+            var filtro4 = context.Productos.FirstOrDefault(obj=>obj.Precio == 2200);
+            Console.WriteLine(filtro4.NombreProducto + "--" + filtro4.Precio);
+
+            //delete de la informacion
+            var elemtoABorrar = context.Productos.FirstOrDefault(obj => obj.NombreProducto == "Computadora");
+            if (elemtoABorrar != null) 
+            { 
+                context.Productos.Remove(elemtoABorrar);
+                context.SaveChanges();
+            }
+            var filtro5 = context.Productos.Where(obj=>obj.Categoria.NombreCategoria == nombre);
+            foreach (var i in filtro5)
+            {
+                Console.WriteLine(i.NombreProducto + " - " + (i.Categoria?.NombreCategoria ?? "Sin categoria"));
+
+            }    
         }
     }
 }
