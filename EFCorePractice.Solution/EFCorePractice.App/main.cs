@@ -17,7 +17,9 @@ namespace EFCorePractice.App
             context.Add(categorias);
             context.SaveChanges();*/
 
-            foreach (var i in context.Categorias)
+            var filtro = context.Categorias.Where(item => item.NombreCategoria == "Tecnologia").ToList();
+
+            foreach (var i in filtro)
             {
                 Console.WriteLine(i.NombreCategoria);
             }
