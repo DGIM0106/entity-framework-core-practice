@@ -1,4 +1,6 @@
 ﻿using EFCorePractice.App.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 
 namespace EFCorePractice.App
@@ -59,6 +61,16 @@ namespace EFCorePractice.App
             {
                 Console.WriteLine(i);
             }
+            Console.WriteLine("*********");
+
+            var innerjoin = context.Productos.Include(obj=>obj.Categoria).ToList();
+            
+            foreach (var i in innerjoin)
+            {
+                Console.WriteLine(i.NombreProducto + " - " + (i.Categoria?.NombreCategoria ?? "Sin categoria"));
+            }
+            
+
             Console.WriteLine("*********");
         }
     }
