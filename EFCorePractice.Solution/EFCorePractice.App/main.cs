@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using EFCorePractice.App.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace EFCorePractice.App
 {
@@ -6,6 +7,20 @@ namespace EFCorePractice.App
     {
         static void Main(string[] args)
         {
+            var context = new EfcorePracticeDbContext();
+
+            /*var categorias = new Categoria
+            {
+                NombreCategoria = "Tecnologia"
+            };
+
+            context.Add(categorias);
+            context.SaveChanges();*/
+
+            foreach (var i in context.Categorias)
+            {
+                Console.WriteLine(i.NombreCategoria);
+            }
         }
     }
 }
