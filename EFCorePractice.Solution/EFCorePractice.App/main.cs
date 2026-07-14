@@ -9,7 +9,7 @@ namespace EFCorePractice.App
         {
             var context = new EfcorePracticeDbContext();
 
-            /*var categorias = new Categoria
+            /*var categorias = new Categoria()
             {
                 NombreCategoria = "Tecnologia"
             };
@@ -17,12 +17,49 @@ namespace EFCorePractice.App
             context.Add(categorias);
             context.SaveChanges();*/
 
-            var filtro = context.Categorias.Where(item => item.NombreCategoria == "Tecnologia").ToList();
+            /*var newProducto = new Producto()
+            {
+                NombreProducto = "Telefono",
+                Precio = 1500,
+                Categoria = new Categoria()
+                {
+                    NombreCategoria = "Tecnologia"
+                }
+            };
 
-            foreach (var i in filtro)
+            context.Add(newProducto);
+            context.SaveChanges();
+
+            var newProducto2 = new Producto()
+            {
+                NombreProducto = "Computadora",
+                Precio = 2500,
+                CategoriaId = 1
+            };
+            context.Add(newProducto2);
+            context.SaveChanges();*/
+
+            var nombre = "Tecnologia";
+
+            var filtro = context.Categorias.Where(item => item.NombreCategoria == nombre).GroupBy(item => item.NombreCategoria).ToList();
+
+            Console.WriteLine(filtro.FirstOrDefault().Key);
+
+            //var filtro = context.Categorias.Where(item => item.NombreCategoria == nombre);
+            /*foreach (var i in filtro)
             {
                 Console.WriteLine(i.NombreCategoria);
+            }*/
+
+
+            Console.WriteLine("*********");
+
+            var filtro2 = context.Productos.Where(item => item.Categoria.NombreCategoria == nombre).Select(item =>item.NombreProducto);
+            foreach (var i in filtro2)
+            {
+                Console.WriteLine(i);
             }
+            Console.WriteLine("*********");
         }
     }
 }
